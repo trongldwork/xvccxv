@@ -25,14 +25,9 @@ import { Button } from "@/components/ui/button";
 import AuthButtons from "@/components/AuthButtons";
 
 export const Assistant = () => {
-  const runtime = useChatRuntime({
-    transport: new AssistantChatTransport({
-      api: "/api/chat",
-    }),
-  });
+  
 
   return (
-    <AssistantRuntimeProvider runtime={runtime}>
       <SidebarProvider>
         <div className="flex h-dvh w-full pr-0.5">
           <ThreadListSidebar />
@@ -68,6 +63,5 @@ export const Assistant = () => {
           </SidebarInset>
         </div>
       </SidebarProvider>
-    </AssistantRuntimeProvider>
   );
 };
