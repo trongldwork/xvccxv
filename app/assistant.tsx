@@ -21,6 +21,8 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { Button } from "@/components/ui/button";
+import AuthButtons from "@/components/AuthButtons";
 
 export const Assistant = () => {
   const runtime = useChatRuntime({
@@ -55,6 +57,10 @@ export const Assistant = () => {
                   </BreadcrumbItem>
                 </BreadcrumbList>
               </Breadcrumb>
+              <div className="flex ml-auto space-x-2 w-fit">
+          <AuthButtons />
+</div>
+
             </header>
             <div className="flex-1 overflow-hidden">
               <Thread />
