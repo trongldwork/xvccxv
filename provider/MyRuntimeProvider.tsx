@@ -80,22 +80,35 @@ const threadListAdapter: RemoteThreadListAdapter = {
   unstable_Provider: ({ children }) => {
     const threadListItem = useThreadListItem();
     const remoteId = threadListItem.remoteId;
+    console.log("ThreadListItem remoteId:", remoteId);
+    // if thread not initialized yet, remoteId will be undefined
+    // so we need to handle that case in the history adapter
+    if (!remoteId) {
+      //create new thread and get remoteId
+      console.log("Thread not initialized yet, remoteId is undefined");
+      return null;
+    }
 
     const history = useMemo<ThreadHistoryAdapter>(
       () => ({
         async load() {
+          console.log("Loading messages for thread:", remoteId);
           if (!remoteId) return { messages: [] };
 
           const messages = await getMessages(remoteId);
           return {
             messages: messages.map((m) => ({
               message: m.content,
-              parentId: m.id ?? undefined,
+              parentId: m.threadId ?? undefined,
+              role: m.role,
+              createdAt: m.createdAt,
+              id: m.id,
             })),
           };
         },
 
         async append(message) {
+          console.log("Appending message to thread:", remoteId, message);
           if (!remoteId) {
             console.warn("Cannot save message - thread not initialized");
             return;
